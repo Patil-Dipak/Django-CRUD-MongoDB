@@ -22,3 +22,12 @@ def deptApi(request, id = 0 ):
             dept_serializer.save()
             return JsonResponse("Added Successfully", safe= True)
         return JsonResponse("Failed to Add",safe=False)
+    elif request.method == "PUT":
+        dept_data = JSONParser().parse(request)
+        dept = Dept.objects.get(DeptId = dept_data['DeptId'])
+        dept_serializer = DeptSerializer(dept, data = dept_data)
+
+        if dept_serializer.is_valid():
+            dept_serializer.save()
+            return JsonResponse("Update Successfully", safe= True)
+        return JsonResponse("Failed to Update",safe=False)
