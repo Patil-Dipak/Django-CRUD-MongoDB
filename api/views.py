@@ -43,3 +43,12 @@ def employeeApi(request, id = 0 ):
         emp = Employee.objects.all()
         emp_serializers = EmployeeSerializer(emp, many = True)
         return JsonResponse(emp_serializers.data, safe = False)
+    # POST method
+    elif request.method == "POST":
+        emp_data = JSONParser().parse(request)
+        emp_serializer = EmployeeSerializer(data = emp_data)
+
+        if emp_serializer.is_valid():
+            emp_serializer.save()
+            return JsonResponse("Added Successfully", safe= False)
+        return JsonResponse("Failed to Add",safe=False)
