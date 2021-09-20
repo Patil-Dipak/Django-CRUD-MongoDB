@@ -62,3 +62,8 @@ def employeeApi(request, id = 0 ):
             emp_serializer.save()
             return JsonResponse("Update Successfully", safe= False)
         return JsonResponse("Failed to Update")
+    #Delete method
+    elif request.method == "DELETE":
+        emp = Employee.objects.get(EmployeetId = id)
+        emp.delete()
+        return JsonResponse("Deleted Successfully", safe=False)
