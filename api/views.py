@@ -52,3 +52,13 @@ def employeeApi(request, id = 0 ):
             emp_serializer.save()
             return JsonResponse("Added Successfully", safe= False)
         return JsonResponse("Failed to Add",safe=False)
+    # PUT method
+    elif request.method == "PUT":
+        emp_data = JSONParser().parse(request)
+        emp = Employee.objects.get(EmployeetId = emp_data['EmployeetId'])
+        emp_serializer = EmployeeSerializer(emp, data = emp_data)
+
+        if emp_serializer.is_valid():
+            emp_serializer.save()
+            return JsonResponse("Update Successfully", safe= False)
+        return JsonResponse("Failed to Update")
