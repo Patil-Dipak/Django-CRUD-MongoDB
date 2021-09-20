@@ -14,4 +14,11 @@ def deptApi(request, id = 0 ):
         dept = Dept.objects.all()
         dept_serializers = DeptSerializer(dept, many = True)
         return JsonResponse(dept_serializers.data, safe = True)
-    
+    elif request.method == "POST":
+        dept_data = JSONParser().parse(request)
+        dept_serializer = DeptSerializer(data = dept_data)
+
+        if dept_serializer.is_valid():
+            dept_serializer.save()
+            return JsonResponse("Added Successfully", safe= True)
+        return JsonResponse("Failed to Add",safe=False)
