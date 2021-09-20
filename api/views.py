@@ -31,3 +31,7 @@ def deptApi(request, id = 0 ):
             dept_serializer.save()
             return JsonResponse("Update Successfully", safe= True)
         return JsonResponse("Failed to Update",safe=False)
+    elif request.method == "DELETE":
+        dept = Dept.objects.get(DeptId = id)
+        dept.delete()
+        return JsonResponse("Deleted Successfully", safe=True)
