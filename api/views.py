@@ -13,14 +13,14 @@ def deptApi(request, id = 0 ):
     if request.method == "GET":
         dept = Dept.objects.all()
         dept_serializers = DeptSerializer(dept, many = True)
-        return JsonResponse(dept_serializers.data, safe = True)
+        return JsonResponse(dept_serializers.data, safe = False)
     elif request.method == "POST":
         dept_data = JSONParser().parse(request)
         dept_serializer = DeptSerializer(data = dept_data)
 
         if dept_serializer.is_valid():
             dept_serializer.save()
-            return JsonResponse("Added Successfully", safe= True)
+            return JsonResponse("Added Successfully", safe= False)
         return JsonResponse("Failed to Add",safe=False)
     elif request.method == "PUT":
         dept_data = JSONParser().parse(request)
@@ -29,9 +29,9 @@ def deptApi(request, id = 0 ):
 
         if dept_serializer.is_valid():
             dept_serializer.save()
-            return JsonResponse("Update Successfully", safe= True)
-        return JsonResponse("Failed to Update",safe=False)
+            return JsonResponse("Update Successfully", safe= False)
+        return JsonResponse("Failed to Update")
     elif request.method == "DELETE":
         dept = Dept.objects.get(DeptId = id)
         dept.delete()
-        return JsonResponse("Deleted Successfully", safe=True)
+        return JsonResponse("Deleted Successfully", safe=False)
