@@ -35,3 +35,11 @@ def deptApi(request, id = 0 ):
         dept = Dept.objects.get(DeptId = id)
         dept.delete()
         return JsonResponse("Deleted Successfully", safe=False)
+
+# Employee view
+@csrf_exempt
+def employeeApi(request, id = 0 ):
+    if request.method == "GET":
+        emp = Employee.objects.all()
+        emp_serializers = EmployeeSerializer(emp, many = True)
+        return JsonResponse(emp_serializers.data, safe = False)
